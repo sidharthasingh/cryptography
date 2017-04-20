@@ -1,5 +1,5 @@
 import java.util.Scanner;
-class xor
+class inverse
 {
 	public static void main(String arg[])
 	{
@@ -11,28 +11,22 @@ class xor
 			opt=sc.nextInt();
 			switch(opt)
 			{
-				case 1:codexor.encode();break;
-				case 2:codexor.decode();break;
+				case 1:codeInverse.encode();break;
+				case 2:codeInverse.decode();break;
 			}
 		}
 	}
 }
 
-class codexor
+class codeInverse
 {
 	
-	static String Xor(String a,String b)
+	static String Inverse(String a)
 	{
-		char x,y;
 		String str="";
 		for(int i=0;i<a.length();i++)
 		{
-			x=a.charAt(i);
-			y=b.charAt(i);
-			if(x==y)
-				str+="0";
-			else
-				str+="1";
+			str+=codeInverse.inv(a.charAt(i));
 		}
 		return str;
 	}
@@ -42,23 +36,6 @@ class codexor
 		if(x=='1')
 			return '0';
 		return '1';
-	}
-
-	static String invXor(String a,String b)
-	{
-		// a is the decodable String, b is the key 
-		char x,y;
-		String str="";
-		for(int i=0;i<a.length();i++)
-		{
-			x=a.charAt(i);
-			y=b.charAt(i);
-			if(x=='1')
-				str+=codexor.inv(y);
-			else
-				str+=y;
-		}
-		return str;
 	}
 
 	static String toBinary(int x)
@@ -89,38 +66,21 @@ class codexor
 		return sum;
 	}
 
-	static char keyOnChar(char x,char key)
-	{
-		return (char)codexor.fromBinary(codexor.Xor(codexor.toBinary((int)x),codexor.toBinary((int)key)));
-	}
-
 	static void encode()
 	{
 		Scanner sc=new Scanner(System.in);
 		System.out.print("Enter the String to encode : ");
 		String s=sc.nextLine();
-		System.out.print("Enter a 8 digit Key (1 - 8): ");
-		String key=sc.nextLine();
-		if(key.length()!=8)
-		{
-			System.out.println("Key not valid");
-			return;
-		}
 
 		//Encoding algorithm starts
 
 		String str="";
 		for(int i=0;i<s.length();i++)
 		{
-			// str+=(int)codexor.keyOnChar(s.charAt(i),key)+" ";
-			str+=codexor.keyOnChar(s.charAt(i),key.charAt(i%8));
+			// str+=(int)codeInverse.keyOnChar(s.charAt(i),key)+" ";
+			str+=(char)codeInverse.fromBinary(codeInverse.Inverse(codeInverse.toBinary(s.charAt(i))));
 		}
 		System.out.print("The decoded String is      : "+str);
-	}
-
-	static char charOnKey(char c,char key)
-	{
-		return (char)codexor.fromBinary(codexor.invXor(codexor.toBinary((int)c),codexor.toBinary((int)key)));
 	}
 
 	static void decode()
@@ -128,21 +88,14 @@ class codexor
 		Scanner sc=new Scanner(System.in);
 		System.out.print("Enter the String to decode : ");
 		String s=sc.nextLine();
-		System.out.print("Enter a 8 digit Key (1 - 8): ");
-		String key=sc.nextLine();
-		if(key.length()!=8)
-		{
-			System.out.println("Key not valid");
-			return;
-		}
 
 		//Encoding algorithm starts
 
 		String str="";
 		for(int i=0;i<s.length();i++)
 		{
-			// str+=(int)codexor.keyOnChar(s.charAt(i),key)+" ";
-			str+=codexor.charOnKey(s.charAt(i),key.charAt(i%8));
+			// str+=(int)codeInverse.keyOnChar(s.charAt(i),key)+" ";
+			str+=(char)codeInverse.fromBinary(codeInverse.Inverse(codeInverse.toBinary(s.charAt(i))));
 		}
 		System.out.print("The encoded String is      : "+str);
 	}
