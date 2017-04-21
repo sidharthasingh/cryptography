@@ -51,8 +51,8 @@ class codeCondense
 
 	static char  keyOnChar(char x)
 	{
-		String str="",bin=codeCondense.toBinary((int)x);
-		for(int i=0;i<bin.length();i++)
+		String str="",s=codeCondense.toBinary((int)x);
+		for(int i=0;i<s.length();i++)
 		{
 			if(i%2==0)
 			{
@@ -69,7 +69,30 @@ class codeCondense
 					str+='0';
 			}
 		}
-		return codeCondense.fromBinary(str);
+		return (char)codeCondense.fromBinary(str);
+	}
+
+	static char  charOnKey(char x)
+	{
+		String str="",s=codeCondense.toBinary((int)x);
+		for(int i=0;i<s.length();i++)
+		{
+			if(i%2==0)
+			{
+				if(s.charAt(i)=='0')
+					str+='1';
+				else
+					str+='0';
+			}
+			else
+			{
+				if(s.charAt(i)=='1')
+					str+='1';
+				else
+					str+='0';
+			}
+		}
+		return (char)codeCondense.fromBinary(str);
 	}
 
 	static void encode()
@@ -84,13 +107,25 @@ class codeCondense
 		for(int i=0;i<s.length();i++)
 		{
 			// str+=(int)codexor.keyOnChar(s.charAt(i),key)+" ";
-			str+=codexor.keyOnChar(s.charAt(i));
+			str+=codeCondense.keyOnChar(s.charAt(i));
 		}
-		System.out.print("The decoded String is      : "+str);
+		System.out.print("The encoded String is      : "+str);
 	}
 
 	static void decode()
 	{
-		
+		Scanner sc=new Scanner(System.in);
+		System.out.print("Enter the String to decode : ");
+		String s=sc.nextLine();
+
+		//Encoding algorithm starts
+
+		String str="";
+		for(int i=0;i<s.length();i++)
+		{
+			// str+=(int)codexor.keyOnChar(s.charAt(i),key)+" ";
+			str+=codeCondense.charOnKey(s.charAt(i));
+		}
+		System.out.print("The decoded String is      : "+str);
 	}
 }
