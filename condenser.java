@@ -20,9 +20,73 @@ class condenser
 
 class codeCondense
 {
+
+	static String toBinary(int x)
+	{
+		String str="";
+		int r;
+		while(x!=0)
+		{
+			r=x%2;
+			str=r+str;
+			x=x/2;
+		}
+		if(str.length()!=8)
+			for(int l=8-str.length(),i=0;i<l;i++)
+				str='0'+str;
+		return str;
+	}
+
+	static int fromBinary(String s)
+	{
+		String str="";
+		int i,j=0,sum=0;
+		for(i=s.length()-1;i>=0;j++,i--)
+		{
+			if(s.charAt(i)=='1')
+				sum+=Math.pow(2,j);
+		}
+		return sum;
+	}
+
+	static char  keyOnChar(char x)
+	{
+		String str="",bin=codeCondense.toBinary((int)x);
+		for(int i=0;i<bin.length();i++)
+		{
+			if(i%2==0)
+			{
+				if(s.charAt(i)=='0')
+					str+='1';
+				else
+					str+='0';
+			}
+			else
+			{
+				if(s.charAt(i)=='1')
+					str+='1';
+				else
+					str+='0';
+			}
+		}
+		return codeCondense.fromBinary(str);
+	}
+
 	static void encode()
 	{
+		Scanner sc=new Scanner(System.in);
+		System.out.print("Enter the String to encode : ");
+		String s=sc.nextLine();
 
+		//Encoding algorithm starts
+
+		String str="";
+		for(int i=0;i<s.length();i++)
+		{
+			// str+=(int)codexor.keyOnChar(s.charAt(i),key)+" ";
+			str+=codexor.keyOnChar(s.charAt(i));
+		}
+		System.out.print("The decoded String is      : "+str);
 	}
 
 	static void decode()
