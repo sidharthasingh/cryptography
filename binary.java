@@ -1,5 +1,6 @@
 public class binary
 {
+
 	static String toBinary(int x)
 	{
 		String str="";
@@ -15,6 +16,7 @@ public class binary
 				str='0'+str;
 		return str;
 	}
+
 	static int fromBinary(String s)
 	{
 		String str="";
@@ -26,6 +28,7 @@ public class binary
 		}
 		return sum;
 	}
+
 	static String inverse(String s)
 	{
 		String str="";
@@ -38,6 +41,7 @@ public class binary
 		}
 		return str;
 	}
+
 	static String equalizeLength(String a,int x)
 	{
 		int n=x-a.length();
@@ -46,6 +50,7 @@ public class binary
 			str+='0';
 		return str+a;
 	}
+
 	static String xor(String a,String b)
 	{
 		String str="";
@@ -110,4 +115,33 @@ public class binary
 			str='1'+str;
 		return str;
 	}
+
+	static String rightShift(String s)
+	{
+		return '0'+s.substring(0,s.length()-1);
+	}
+
+	static boolean isBinary(String s)
+	{
+		for(int i=0;i<s.length();i++)
+			if(s.charAt(i)!='0' && s.charAt(i)!='1')
+				return false;
+		return true;
+	}
+
+	static String equalizeLength(String s)
+	{
+		int l=s.length();
+		String str="";		
+		if(((Math.log(l)/Math.log(2))-(float)((int)(Math.log(l)/Math.log(2))))==0)
+			return s;
+		l=1+(int)(Math.log(l)/Math.log(2));
+		if(l<3)
+			l=3;
+		l=(int)Math.pow(2,l);
+		for(int i=0;i<l-s.length();i++)
+			str+='0';
+		return str+s;
+	}
+
 }
