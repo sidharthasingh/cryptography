@@ -1,4 +1,3 @@
-import java.util.Scanner;
 public class Number
 {
 	private String num;
@@ -65,9 +64,16 @@ public class Number
 	void refresh()
 	{
 		String str="";
-		for(int i=0;i<num.length();i++)
+		int i;
+		for(i=0;i<num.length();i++)
 			if(num.charAt(i)!='0')
+			{
 				str+=num.charAt(i);
+				i++;
+				break;
+			}
+		for(;i<num.length();i++)
+			str+=num.charAt(i);
 		num=str;
 	}
 
@@ -495,6 +501,60 @@ public class Number
 		if(bx.greaterThan(ax))
 			return Number.sub(bx,ax);
 		String a=ax.retNum();
+		String b=bx.retNum();
+		int la=a.length(),lb=b.length();
+		if(la!=lb)
+		{
+			String str="";
+			if(la<lb)
+			{
+				for(int i=0;i<lb-la;i++)
+					str+='0';
+				a=str+a;
+			}
+			else if(lb<la)
+			{
+				for(int i=0;i<la-lb;i++)
+					str+='0';
+				b=str+b;
+			}
+		}
+		int arr[]=new int[a.length()];
+		int l=a.length();
+		int brr[]=new int[b.length()];
+		String str="";
+		for(int i=0;i<l;i++)
+		{
+			arr[i]=(int)a.charAt(i)-48;
+			brr[i]=(int)b.charAt(i)-48;
+		}
+		for(int i=l-1;i>=0;i--)
+		{
+			if(arr[i]-brr[i]<0)
+			{
+				arr[i-1]-=1;
+				arr[i]+=10;
+			}
+			str=((char)(arr[i]-brr[i]+48))+str;
+		}
+		try
+		{
+			Number n=new Number(str);
+			n.refresh();
+			return n;
+		}
+		catch(Exception e)
+		{
+
+		}
+		return null;
+	}
+
+	Number sub(Number bx)
+	{
+		if(bx.greaterThan(this))
+			return Number.sub(bx,this);
+		String a=this.retNum();
 		String b=bx.retNum();
 		int la=a.length(),lb=b.length();
 		if(la!=lb)
