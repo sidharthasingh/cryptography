@@ -21,6 +21,29 @@ public class Number
 		}
 		return "";
 	} 
+
+	static int singleDiv(String n,String m)
+	{
+		try
+		{
+			Number num=new Number(m);
+			Number div=new Number(n);
+			Number i=new Number(0);
+			Number temp=new Number(0);
+			for(;!temp.greaterThan(num);)
+			{
+				i.inc(1);
+				temp=Number.mul(div,i);
+			}
+			return Integer.parseInt(i.sub(new Number(1)).retNum());
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
 	Number()
 	{
 		num="0";
@@ -74,7 +97,10 @@ public class Number
 			}
 		for(;i<num.length();i++)
 			str+=num.charAt(i);
-		num=str;
+		if(str.length()==0)
+			num="0";
+		else
+			num=str;
 	}
 
 	// INCREASE BY X
@@ -596,6 +622,74 @@ public class Number
 			Number n=new Number(str);
 			n.refresh();
 			return n;
+		}
+		catch(Exception e)
+		{
+
+		}
+		return null;
+	}
+
+	// DIVISION
+
+	static Number div(Number n,Number m) throws Exception
+	{
+		n.refresh();
+		m.refresh();
+		boolean checkn=n.equalTo(0),checkm=m.equalTo(0);
+		if(checkn)
+		{
+			if(checkm)
+				return new Number(0);
+			else
+				throw new Exception("Exception found : Cannot divide by zero\n");
+		}
+		else if(checkm)
+		{
+			if(checkn)
+				return new Number(0);
+			else
+				throw new Exception("Exception found : Case of Infinity\n");
+		}
+		try
+		{
+			if(m.lessThan(n))
+				return new Number(0);
+			String rem;
+			String div=n.retNum();
+			String num=m.retNum();
+			String quo="0";
+			String q;
+			int j=div.length()-1;
+			quo+=Number.singleDiv(div,num.substring(0,j+1));
+			rem=Number.sub(new Number(num.substring(0,j+1)),Number.mul(new Number(div),new Number(quo))).retNum();
+			j++;
+			while(j<num.length())
+			{
+				rem+=num.charAt(j);
+				q=""+Number.singleDiv(div,rem);
+				rem=Number.sub(new Number(rem),Number.mul(new Number(div),new Number(q))).retNum();
+				quo+=q;
+				j++;
+			}
+			n=new Number(quo);
+			n.refresh();
+			return n;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// REMAINDER
+
+	static Number rem(Number n,Number m)
+	{
+		try
+		{
+			return Number.sub(m,Number.mul(n,Number.div(n,m)));
 		}
 		catch(Exception e)
 		{
